@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # Baza Relacyjna
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: nosql_demo
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # Baza Dokumentowa
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo_data:/data/db
+
+  # Baza Klucz-Wartość
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  # Baza Grafowa
+  neo4j:
+    image: neo4j:5.3
+    container_name: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/password
+
+
+volumes:
+  mysql_data:
+  mongo_data:
